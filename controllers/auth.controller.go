@@ -3,8 +3,11 @@ package controllers
 import (
 	"github.com/PogunGun/golang-fiber-rest-api/database"
 	"github.com/PogunGun/golang-fiber-rest-api/models"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
+	"strconv"
+	"time"
 )
 
 func Register(c *fiber.Ctx) error {
@@ -56,5 +59,25 @@ func Login(c *fiber.Ctx) error {
 			"message": "incorrect password",
 		})
 	}
-	return c.JSON(user)
+
+	claims := jwt.NewWithClaims(jwt.SigningMethodES256, jwt.StandardClaims{
+		Issuer:    strconv.Itoa(int(user.Id)),
+		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), // 1 day
+	})
+
+	token, err := claims.SignedString([]byte("secret"))
+	if err != nil {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+	cookie := fiber.Cookie{
+		Name:     "jwt",
+		Value:    token,
+		Expires:  time.Now().Add(time.Hour * 24),
+		HTTPOnly: true,
+	}
+	c.Cookie(&cookie)
+
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
 }
