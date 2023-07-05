@@ -7,15 +7,6 @@ import (
 	"strconv"
 )
 
-package controllers
-
-import (
-"github.com/PogunGun/golang-fiber-rest-api/database"
-"github.com/PogunGun/golang-fiber-rest-api/models"
-"github.com/gofiber/fiber/v2"
-"strconv"
-)
-
 func AllRoles(c *fiber.Ctx) error {
 	var roles []models.Role
 
