@@ -50,7 +50,7 @@ func GetRole(c *fiber.Ctx) error {
 	role := models.Role{
 		Id: uint(id),
 	}
-	database.DB.Find(&role)
+	database.DB.Preload("Permissions").Find(&role)
 
 	return c.JSON(role)
 }
