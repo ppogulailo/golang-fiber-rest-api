@@ -24,6 +24,8 @@ func Setup(app *fiber.App) {
 	app.Put("/api/users/:id", controllers.UpdateUser)
 	app.Delete("/api/users/:id", controllers.DeleteUser)
 
+	// CRUD ORDERS
+	app.Get("/api/product", controllers.AllOrders)
 	// CRUD PRODUCTS
 
 	app.Get("/api/product", controllers.AllProducts)
