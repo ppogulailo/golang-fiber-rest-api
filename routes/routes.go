@@ -26,6 +26,7 @@ func Setup(app *fiber.App) {
 
 	// CRUD ORDERS
 	app.Get("/api/product", controllers.AllOrders)
+	app.Post("/api/product", controllers.Export)
 	// CRUD PRODUCTS
 
 	app.Get("/api/product", controllers.AllProducts)
