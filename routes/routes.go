@@ -41,4 +41,8 @@ func Setup(app *fiber.App) {
 
 	//Permission
 	app.Get("/api/permissions", controllers.AllPermissions)
+
+	//Upload
+	app.Post("/api/upload", controllers.Upload)
+	app.Static("/api/uploads", "./uploads")
 }
